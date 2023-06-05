@@ -1,8 +1,11 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Game {
+public class Game extends JPanel implements KeyListener {
     final int BLOCK_SIZE = 25;
     final int BOARD_WIDTH = 10;
     final int BOARD_HEIGHT = 20;
@@ -86,6 +89,7 @@ public class Game {
 
         if(!isCollision(currentPosition.x + 1, currentPosition.y, currentPiece.getRotation())) {
             currentPiece.setCurrentXPosition(currentPosition.x + 1);
+            repaint();
         }
     }
 
@@ -94,6 +98,7 @@ public class Game {
 
         if(!isCollision(currentPosition.x - 1, currentPosition.y, currentPiece.getRotation())) {
             currentPiece.setCurrentXPosition(currentPosition.x - 1);
+            repaint();
         }
     }
 
@@ -102,6 +107,7 @@ public class Game {
 
         if(!isCollision(currentPosition.x, currentPosition.y + 1, currentPiece.getRotation())) {
             currentPiece.setCurrentYPosition(currentPosition.y + 1);
+            repaint();
         }
     }
 
@@ -115,6 +121,8 @@ public class Game {
             } else {
                 currentPiece.setRotation(rotation+1);
             }
+
+            repaint();
         }
     }
 
@@ -197,6 +205,67 @@ public class Game {
 
 
     public void updateBoard() {
+        try {
+            while(!gameOver) {
+                // code that makes piece fall down
+                Thread.sleep(1000);
+                moveDown();
+                repaint();
+
+                if(isCollision(currentPiece.getCurrentPosition().x, currentPiece.getCurrentPosition().y + 1, currentPiece.getRotation())) {
+                    fixToGrid();
+                    createNewPiece();
+                }
+            }
+        } catch (InterruptedException e) {
+            e.getStackTrace();
+        }
+
+        if(gameOver) {
+            System.out.println("GAME OVER!\nScore: " + score);
+        }
+    }
+
+    // Zeichnen des Spielfeldes und der Spielsteine
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Draw the currently falling piece
+        drawPiece(g);
+        drawGrid(g);
+    }
+
+    public void drawPiece(Graphics g) {
+        g.setColor(tetraminoColors[currentPiece.getShapeID()]);
+
+        for (Point p : tetraminos[currentPiece.getShapeID()][currentPiece.getRotation()]) {
+            g.fillRect((p.x + currentPiece.getCurrentPosition().x) * (BLOCK_SIZE+1), (p.y + currentPiece.getCurrentPosition().y) * (BLOCK_SIZE+1), BLOCK_SIZE, BLOCK_SIZE);
+        }
+    }
+
+    public void drawGrid(Graphics g) {
+        g.setColor(Color.gray);
+
+        for (Point p : gridPoints) {
+            g.fillRect(p.x * (BLOCK_SIZE+1), p.y * (BLOCK_SIZE+1), BLOCK_SIZE, BLOCK_SIZE);
+        }
 
     }
+
+    // Implementierung der Methoden aus dem KeyListener Interface
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP -> this.rotate();
+            case KeyEvent.VK_DOWN -> this.moveDown();
+            case KeyEvent.VK_LEFT -> this.moveLeft();
+            case KeyEvent.VK_RIGHT -> this.moveRight();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }
