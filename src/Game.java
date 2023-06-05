@@ -152,6 +152,8 @@ public class Game extends JPanel implements KeyListener {
             // Game Over logik
             if(newPoint.y <= 0) {
                 gameOver = true;
+                System.out.println("GAME OVER!\nScore: " + score);
+                return;
             }
 
             gridPoints.add(newPoint);
@@ -219,10 +221,6 @@ public class Game extends JPanel implements KeyListener {
             }
         } catch (InterruptedException e) {
             e.getStackTrace();
-        }
-
-        if(gameOver) {
-            System.out.println("GAME OVER!\nScore: " + score);
         }
     }
 
