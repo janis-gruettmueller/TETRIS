@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
     final int BLOCK_SIZE = 25;
@@ -66,6 +67,55 @@ public class Game {
             }
     };
 
+    public Game() {
+        gridPoints = new ArrayList<Point>();
+        grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
+        gameOver = false;
+        createNewPiece();
+    }
+
+    public void createNewPiece() {
+
+    }
 
 
+    public void moveRight() {
+
+    }
+
+    public void moveLeft() {
+
+    }
+
+    public void moveDown() {
+
+    }
+
+    public void rotate() {
+
+    }
+
+
+    public boolean isCollision(int xPos, int yPos, int rotation) {
+
+
+        return false;
+    }
+
+    public void fixToGrid() {
+
+    }
+
+    public void clearRows() {
+
+    }
+
+    public void deleteRow(int row) {
+
+    }
+
+
+    public void updateBoard() {
+
+    }
 }
