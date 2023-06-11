@@ -13,6 +13,8 @@ public class Game extends JPanel implements KeyListener {
     private boolean gameOver;
     private long score;
 
+    private User currentUser;
+
     private Piece currentPiece;
     private ArrayList<Point> gridPoints;
     private boolean[][] grid;
@@ -70,12 +72,19 @@ public class Game extends JPanel implements KeyListener {
             }
     };
 
-    public Game() {
+    public Game(User user) {
         gridPoints = new ArrayList<Point>();
         grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
         gameOver = false;
+        currentUser = user;
         createNewPiece();
     }
+
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
 
     public void createNewPiece() {
         Random rand = new Random();
@@ -187,6 +196,10 @@ public class Game extends JPanel implements KeyListener {
             case 2 -> score += 300;
             case 3 -> score += 500;
             case 4 -> score += 800;
+        }
+
+        if(score > currentUser.getHighscore()) {
+            currentUser.setHighscore(score);
         }
     }
 
