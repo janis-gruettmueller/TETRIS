@@ -231,10 +231,10 @@ public class Game extends JPanel implements KeyListener {
 
 
     public void updateBoard() {
-        try {
+        //try {
             while(!gameOver) {
                 // code that makes piece fall down
-                Thread.sleep(1000);
+                //Thread.sleep(1000);
                 moveDown();
                 repaint();
 
@@ -243,12 +243,12 @@ public class Game extends JPanel implements KeyListener {
                     createNewPiece();
                 }
             }
-        } catch (InterruptedException e) {
-            e.getStackTrace();
-        }
+        //} catch (InterruptedException e) {
+          //  e.getStackTrace();
+        //}
 
         if(gameOver) {
-            System.out.println("GAME OVER!" + "\n\nPlayer: " + currentUser.getUsername() + "\nScore: " + score + "\nHighScore: " + currentUser.getHighscore());
+            System.out.println("GAME OVER!" + "\n\nPlayer: " + currentUser.getUsername() + "\nScore: " + score + "\nHighScore: " + currentUser.getHighscore() + "\n");
             gridPoints.clear();
             grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
             repaint();

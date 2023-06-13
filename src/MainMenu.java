@@ -24,10 +24,6 @@ public class MainMenu extends JFrame {
     }
 
     public MainMenu() {
-        // if Tetris is run for the first time on this Computer, execute the following code once:
-        // users = new User[]{new User("Test")};
-        // saveUserData(users);
-
         if(currentGame == null) {
             currentGame = new Game();
 
@@ -112,7 +108,12 @@ public class MainMenu extends JFrame {
                 userData = temp;
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            if(userData == null) {
+                userData = new User[] {new User(playerName.toUpperCase())};
+                currentGame.setCurrentUser(userData[0]);
+            } else {
+                e.printStackTrace();
+            }
         }
 
         return userData;
