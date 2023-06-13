@@ -45,13 +45,14 @@ public class GameOverMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                GameGUI gameGUI = new GameGUI();
-                gameGUI.setVisible(true);
+                MainMenu.mainGameFrame = new MainGame();
+                MainMenu.mainGameFrame.setVisible(true);
+
+                MainMenu.currentGame.init();
             }
         };
         replayButton.addActionListener(replayAction);
 
-        // Potentially add code to display Score, Highscore and current user
         gameOverPanel.add(replayButton);
         gameOverPanel.add(returnButton);
     }

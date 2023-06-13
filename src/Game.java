@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -7,6 +9,8 @@ import java.util.Random;
 
 public class Game extends JPanel implements KeyListener {
     public boolean gameOver;
+
+    private Timer timer;
 
     final int BLOCK_SIZE = 25;
     final int BOARD_WIDTH = 10;
@@ -173,7 +177,7 @@ public class Game extends JPanel implements KeyListener {
             // Game Over logik
             if(newPoint.y <= 0) {
                 gameOver = true;
-                break;
+                return;
             }
 
             gridPoints.add(newPoint);
@@ -231,28 +235,31 @@ public class Game extends JPanel implements KeyListener {
 
 
     public void updateBoard() {
-        //try {
-            while(!gameOver) {
-                // code that makes piece fall down
-                //Thread.sleep(1000);
+        // code that makes piece fall down
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 moveDown();
                 repaint();
 
-                if(isCollision(currentPiece.getCurrentPosition().x, currentPiece.getCurrentPosition().y + 1, currentPiece.getRotation())) {
+                if (isCollision(currentPiece.getCurrentPosition().x, currentPiece.getCurrentPosition().y + 1, currentPiece.getRotation())) {
                     fixToGrid();
                     createNewPiece();
                 }
-            }
-        //} catch (InterruptedException e) {
-          //  e.getStackTrace();
-        //}
 
-        if(gameOver) {
-            System.out.println("GAME OVER!" + "\n\nPlayer: " + currentUser.getUsername() + "\nScore: " + score + "\nHighScore: " + currentUser.getHighscore() + "\n");
-            gridPoints.clear();
-            grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
-            repaint();
-        }
+                if(gameOver) {
+                    System.out.println("GAME OVER!" + "\n\nPlayer: " + currentUser.getUsername() + "\nScore: " + score + "\nHighScore: " + currentUser.getHighscore() + "\n");
+                    gridPoints.clear();
+                    grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
+                    timer.stop();
+
+                    MainMenu.mainGameFrame.dispose();
+                    GameOverMenu gameOverMenu = new GameOverMenu();
+                    gameOverMenu.setVisible(true);
+                }
+            }
+        });
+        timer.start();
     }
 
     // Zeichnen des Spielfeldes und der Spielsteine

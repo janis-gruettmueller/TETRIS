@@ -6,6 +6,7 @@ import java.io.*;
 
 public class MainMenu extends JFrame {
     static Game currentGame;
+    static MainGame mainGameFrame;
     String playerName;
     User[] users;
 
@@ -59,10 +60,10 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                //GameGUI gameGUI = new GameGUI();
-                //gameGUI.setVisible(true);
-                GameOverMenu gameOver = new GameOverMenu();
-                gameOver.setVisible(true);
+                mainGameFrame = new MainGame();
+                mainGameFrame.setVisible(true);
+
+                currentGame.init();
             }
         };
         startButton.addActionListener(startAction);
@@ -91,6 +92,11 @@ public class MainMenu extends JFrame {
             FileInputStream fis = new FileInputStream("users.dat");
             ObjectInputStream in = new ObjectInputStream(fis);
             userData = (User[]) in.readObject();
+
+            if(userData == null) {
+                userData = new User[] {new User(playerName.toUpperCase())};
+                currentGame.setCurrentUser(userData[0]);
+            }
 
             for (User usr : userData) {
                 if (usr.getUsername().equals(playerName.toUpperCase())) {
