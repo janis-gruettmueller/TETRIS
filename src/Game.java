@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Game extends JPanel implements KeyListener {
+    public boolean gameOver;
+
     final int BLOCK_SIZE = 25;
     final int BOARD_WIDTH = 10;
     final int BOARD_HEIGHT = 20;
 
-    private boolean gameOver;
     private long score;
 
     private User currentUser;
@@ -72,17 +73,28 @@ public class Game extends JPanel implements KeyListener {
             }
     };
 
-    public Game(User user) {
+    public Game() {
         gridPoints = new ArrayList<Point>();
         grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
         gameOver = false;
-        currentUser = user;
+        currentUser = null;
         createNewPiece();
     }
 
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
 
     public User getCurrentUser() {
         return currentUser;
+    }
+
+
+    public void init() {
+        System.out.println("Game started");
+        gameOver = false;
+        createNewPiece();
+        updateBoard();
     }
 
 
@@ -161,6 +173,7 @@ public class Game extends JPanel implements KeyListener {
             // Game Over logik
             if(newPoint.y <= 0) {
                 gameOver = true;
+                break;
             }
 
             gridPoints.add(newPoint);
@@ -235,7 +248,10 @@ public class Game extends JPanel implements KeyListener {
         }
 
         if(gameOver) {
-            System.out.println("GAME OVER!\nScore: " + score);
+            System.out.println("GAME OVER!" + "\n\nPlayer: " + currentUser.getUsername() + "\nScore: " + score + "\nHighScore: " + currentUser.getHighscore());
+            gridPoints.clear();
+            grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
+            repaint();
         }
     }
 
