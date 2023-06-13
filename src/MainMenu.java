@@ -97,13 +97,13 @@ public class MainMenu extends JFrame {
             userData = (User[]) in.readObject();
 
             for (User usr : userData) {
-                if (usr.getUsername().equals(playerName)) {
+                if (usr.getUsername().equals(playerName.toUpperCase())) {
                     currentGame.setCurrentUser(usr);
                 }
             }
 
             if (currentGame.getCurrentUser() == null) {
-                currentGame.setCurrentUser(new User(playerName));
+                currentGame.setCurrentUser(new User(playerName.toUpperCase()));
 
                 User[] temp = new User[userData.length + 1];
                 System.arraycopy(userData, 0, temp, 1, userData.length);

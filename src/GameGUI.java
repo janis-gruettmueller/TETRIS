@@ -26,8 +26,8 @@ public class GameGUI extends JFrame {
         setTitle("Tetris: Main Game");
         gamePanel.setLayout(null);
 
-        gamePanel.add(MainMenu.currentGame);
-        gamePanel.addKeyListener(MainMenu.currentGame);
+        //gamePanel.add(MainMenu.currentGame);
+        //gamePanel.addKeyListener(MainMenu.currentGame);
 
         //MainMenu.currentGame.init();
 
