@@ -32,6 +32,9 @@ public class MainMenu extends JFrame {
             currentGame = new Game();
 
             playerName = JOptionPane.showInputDialog("Please enter your Name: ");
+            if(playerName == null) {
+                System.exit(0);
+            }
             users = loadUserData(currentGame, playerName);
         }
 
