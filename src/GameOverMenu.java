@@ -32,6 +32,7 @@ public class GameOverMenu extends JFrame {
         ActionListener returnAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                MainMenu.saveUserData(MainMenu.users);
                 dispose();
                 MainMenu mainMenu = new MainMenu();
                 mainMenu.setVisible(true);

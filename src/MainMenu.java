@@ -7,8 +7,10 @@ import java.io.*;
 public class MainMenu extends JFrame {
     static Game currentGame;
     static MainGame mainGameFrame;
+    static User[] users;
+
     String playerName;
-    User[] users;
+
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -48,7 +50,6 @@ public class MainMenu extends JFrame {
         ActionListener quitAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                saveUserData(users);
                 System.exit(0);
             }
         };

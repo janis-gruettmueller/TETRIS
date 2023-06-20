@@ -95,7 +95,7 @@ public class Game extends JPanel implements KeyListener {
 
 
     public void init() {
-        System.out.println("Game started");
+        //System.out.println("Game started");
         gameOver = false;
         createNewPiece();
         updateBoard();
