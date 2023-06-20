@@ -1,17 +1,24 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Game extends JPanel implements KeyListener {
+    public boolean gameOver;
+
+    private Timer timer;
+
     final int BLOCK_SIZE = 25;
     final int BOARD_WIDTH = 10;
     final int BOARD_HEIGHT = 20;
 
-    private boolean gameOver;
     private long score;
+
+    private User currentUser;
 
     private Piece currentPiece;
     private ArrayList<Point> gridPoints;
@@ -74,8 +81,26 @@ public class Game extends JPanel implements KeyListener {
         gridPoints = new ArrayList<Point>();
         grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
         gameOver = false;
+        currentUser = null;
         createNewPiece();
     }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+
+    public void init() {
+        //System.out.println("Game started");
+        gameOver = false;
+        createNewPiece();
+        updateBoard();
+    }
+
 
     public void createNewPiece() {
         Random rand = new Random();
@@ -152,7 +177,10 @@ public class Game extends JPanel implements KeyListener {
             // Game Over logik
             if(newPoint.y <= 0) {
                 gameOver = true;
+<<<<<<< HEAD
                 System.out.println("GAME OVER!\nScore: " + score);
+=======
+>>>>>>> development
                 return;
             }
 
@@ -190,6 +218,10 @@ public class Game extends JPanel implements KeyListener {
             case 3 -> score += 500;
             case 4 -> score += 800;
         }
+
+        if(score > currentUser.getHighscore()) {
+            currentUser.setHighscore(score);
+        }
     }
 
     public void deleteRow(int row) {
@@ -207,21 +239,38 @@ public class Game extends JPanel implements KeyListener {
 
 
     public void updateBoard() {
-        try {
-            while(!gameOver) {
-                // code that makes piece fall down
-                Thread.sleep(1000);
+        // code that makes piece fall down
+        timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 moveDown();
                 repaint();
 
-                if(isCollision(currentPiece.getCurrentPosition().x, currentPiece.getCurrentPosition().y + 1, currentPiece.getRotation())) {
+                if (isCollision(currentPiece.getCurrentPosition().x, currentPiece.getCurrentPosition().y + 1, currentPiece.getRotation())) {
                     fixToGrid();
                     createNewPiece();
                 }
+<<<<<<< HEAD
             }
         } catch (InterruptedException e) {
             e.getStackTrace();
         }
+=======
+
+                if(gameOver) {
+                    System.out.println("GAME OVER!" + "\n\nPlayer: " + currentUser.getUsername() + "\nScore: " + score + "\nHighScore: " + currentUser.getHighscore() + "\n");
+                    gridPoints.clear();
+                    grid = new boolean[BOARD_HEIGHT][BOARD_WIDTH];
+                    timer.stop();
+
+                    MainMenu.mainGameFrame.dispose();
+                    GameOverMenu gameOverMenu = new GameOverMenu();
+                    gameOverMenu.setVisible(true);
+                }
+            }
+        });
+        timer.start();
+>>>>>>> development
     }
 
     // Zeichnen des Spielfeldes und der Spielsteine
