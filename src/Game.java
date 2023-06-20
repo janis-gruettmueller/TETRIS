@@ -177,10 +177,6 @@ public class Game extends JPanel implements KeyListener {
             // Game Over logik
             if(newPoint.y <= 0) {
                 gameOver = true;
-<<<<<<< HEAD
-                System.out.println("GAME OVER!\nScore: " + score);
-=======
->>>>>>> development
                 return;
             }
 
@@ -250,12 +246,6 @@ public class Game extends JPanel implements KeyListener {
                     fixToGrid();
                     createNewPiece();
                 }
-<<<<<<< HEAD
-            }
-        } catch (InterruptedException e) {
-            e.getStackTrace();
-        }
-=======
 
                 if(gameOver) {
                     System.out.println("GAME OVER!" + "\n\nPlayer: " + currentUser.getUsername() + "\nScore: " + score + "\nHighScore: " + currentUser.getHighscore() + "\n");
@@ -270,7 +260,6 @@ public class Game extends JPanel implements KeyListener {
             }
         });
         timer.start();
->>>>>>> development
     }
 
     // Zeichnen des Spielfeldes und der Spielsteine
