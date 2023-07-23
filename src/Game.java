@@ -258,11 +258,11 @@ public class Game extends JPanel implements KeyListener {
                     } else if (score >= 1000 && level == 2) {
                         newLevel(700);
                     } else if (score >= 1500 && level == 3) {
-                        newLevel(500);
+                        newLevel(600);
                     } else if (score >= 2000 && level == 4) {
-                        newLevel(300);
+                        newLevel(400);
                     } else if (score >= 3000 && level == 5) {
-                        newLevel(100);
+                        newLevel(300);
                     }
                 }
 
