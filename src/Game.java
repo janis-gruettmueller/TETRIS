@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class Game extends JPanel implements KeyListener {
     public boolean gameOver;
+    public int level;
 
     private Timer timer;
 
@@ -233,9 +234,14 @@ public class Game extends JPanel implements KeyListener {
         }
     }
 
+    public void newLevel(int time) {
+        System.out.println("Level: " + level++);
+        timer.setDelay(time);
+    }
 
     public void updateBoard() {
         // code that makes piece fall down
+        level = 1;
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -245,6 +251,19 @@ public class Game extends JPanel implements KeyListener {
                 if (isCollision(currentPiece.getCurrentPosition().x, currentPiece.getCurrentPosition().y + 1, currentPiece.getRotation())) {
                     fixToGrid();
                     createNewPiece();
+
+                    // 5 Level
+                    if (score >= 500 && level == 1) {
+                        newLevel(900);
+                    } else if (score >= 1000 && level == 2) {
+                        newLevel(700);
+                    } else if (score >= 1500 && level == 3) {
+                        newLevel(500);
+                    } else if (score >= 2000 && level == 4) {
+                        newLevel(300);
+                    } else if (score >= 3000 && level == 5) {
+                        newLevel(100);
+                    }
                 }
 
                 if(gameOver) {
